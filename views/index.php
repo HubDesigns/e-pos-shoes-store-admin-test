@@ -4,7 +4,7 @@ require_once __DIR__ . '/../config/koneksi.php';
 
 if (!isset($_SESSION['login']) || $_SESSION['login'] != true) {
     echo "<script>
-        alert('Silahkan login terlebih dahulu!');
+        alert('Please log in first.');
         window.location.href = '../login.php';
     </script>";
     exit;
@@ -13,20 +13,20 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] != true) {
 // =========================
 // STATISTIK DASHBOARD
 // =========================
-$qProduk     = $conn->query("SELECT COUNT(*) AS total_produk FROM produk");
-$totalProduk = $qProduk->fetch_assoc()['total_produk'];
+$qProducts     = $conn->query("SELECT COUNT(*) AS total_produk FROM produk");
+$totalProducts = $qProducts->fetch_assoc()['total_produk'];
 
-$qTransaksi     = $conn->query("SELECT COUNT(*) AS total_transaksi FROM transaksi");
-$totalTransaksi = $qTransaksi->fetch_assoc()['total_transaksi'];
+$qTransactions     = $conn->query("SELECT COUNT(*) AS total_transaksi FROM transaksi");
+$totalTransactions = $qTransactions->fetch_assoc()['total_transaksi'];
 
-$qPendapatan = $conn->query("SELECT COALESCE(SUM(total_bayar),0) AS pendapatan FROM transaksi");
-$pendapatan  = $qPendapatan->fetch_assoc()['pendapatan'];
+$qRevenue = $conn->query("SELECT COALESCE(SUM(total_bayar),0) AS pendapatan FROM transaksi");
+$pendapatan  = $qRevenue->fetch_assoc()['pendapatan'];
 
-$qTotalStok = $conn->query("SELECT COALESCE(SUM(stok),0) AS total_stok FROM produk");
-$totalStok  = $qTotalStok->fetch_assoc()['total_stok'];
+$qTotalStock = $conn->query("SELECT COALESCE(SUM(stok),0) AS total_stok FROM produk");
+$totalStock  = $qTotalStock->fetch_assoc()['total_stok'];
 
-$stokStatus = ($totalStok < 20) ? "Rendah" : "Cukup";
-$stokColor  = ($totalStok < 20) ? "bg-red-600" : "bg-green-600";
+$stokStatus = ($totalStock < 20) ? "Low" : "Sufficient";
+$stokColor  = ($totalStock < 20) ? "bg-red-600" : "bg-green-600";
 
 // =========================
 // DATA GRAFIK
@@ -60,7 +60,7 @@ $qPopular = $conn->query("
 ");
 ?>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Dashboard Admin</title>
@@ -115,7 +115,7 @@ $qPopular = $conn->query("
         <li class="relative">
     <button type="button" onclick="toggleDropdown(event)" class="flex items-center gap-2 hover:text-gray-200">
         <i class="fas fa-receipt"></i>
-        <span>Transaksi</span>
+        <span>Transactions</span>
         <i class="fas fa-chevron-down text-xs"></i>
     </button>
 
@@ -125,13 +125,13 @@ $qPopular = $conn->query("
         <a href="../views/laporan.php" 
            class="block px-4 py-3 flex gap-2 hover:bg-gray-100">
             <i class="fas fa-chart-line"></i> 
-            <span>Laporan Penjualan</span>
+            <span>Sales Reports</span>
         </a>
 
         <a href="../views/transaksi.php" 
            class="block px-4 py-3 flex gap-2 hover:bg-gray-100">
             <i class="fas fa-cash-register"></i> 
-            <span>Buat Transaksi</span>
+            <span>Buat Transactions</span>
         </a>
 
     </div>
@@ -140,7 +140,7 @@ $qPopular = $conn->query("
 
         <li>
             <a href="produk.php" class="flex items-center gap-2 hover:text-gray-200">
-                <i class="fas fa-box"></i> Produk
+                <i class="fas fa-box"></i> Products
             </a>
         </li>
 
@@ -159,30 +159,30 @@ $qPopular = $conn->query("
     <!-- HEADER -->
     <h2 class="text-3xl font-bold mb-6 text-blue-800 flex items-center gap-3 scroll-animate">
         <i class="fas fa-tachometer-alt"></i>
-        <span>Dashboard Penjualan</span>
+        <span>Sales Dashboard</span>
     </h2>
 
     <!-- STAT CARD -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 scroll-animate">
         <div class="bg-blue-600 text-white p-6 rounded-xl shadow-xl hover:scale-105 transition">
             <div class="flex justify-between">
-                <h3>Total Produk</h3>
+                <h3>Total Products</h3>
                 <i class="fas fa-boxes text-3xl"></i>
             </div>
-            <p class="text-4xl font-bold mt-2"><?= $totalProduk ?></p>
+            <p class="text-4xl font-bold mt-2"><?= $totalProducts ?></p>
         </div>
 
         <div class="bg-blue-500 text-white p-6 rounded-xl shadow-xl hover:scale-105 transition">
             <div class="flex justify-between">
-                <h3>Total Transaksi</h3>
+                <h3>Total Transactions</h3>
                 <i class="fas fa-shopping-cart text-3xl"></i>
             </div>
-            <p class="text-4xl font-bold mt-2"><?= $totalTransaksi ?></p>
+            <p class="text-4xl font-bold mt-2"><?= $totalTransactions ?></p>
         </div>
 
         <div class="bg-blue-700 text-white p-6 rounded-xl shadow-xl hover:scale-105 transition">
             <div class="flex justify-between">
-                <h3>Pendapatan</h3>
+                <h3>Revenue</h3>
                 <i class="fas fa-money-bill-wave text-3xl"></i>
             </div>
             <p class="text-3xl font-bold mt-2">Rp <?= number_format($pendapatan,0,',','.') ?></p>
@@ -190,10 +190,10 @@ $qPopular = $conn->query("
 
         <div class="<?= $stokColor ?> text-white p-6 rounded-xl shadow-xl hover:scale-105 transition">
             <div class="flex justify-between">
-                <h3>Total Stok</h3>
+                <h3>Total Stock</h3>
                 <i class="fas fa-box-open text-3xl"></i>
             </div>
-            <p class="text-4xl font-bold mt-2"><?= $totalStok ?></p>
+            <p class="text-4xl font-bold mt-2"><?= $totalStock ?></p>
             <p class="mt-2 font-semibold">Status: <?= $stokStatus ?></p>
         </div>
     </div>
@@ -202,14 +202,14 @@ $qPopular = $conn->query("
     <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-10 scroll-animate">
         <div class="bg-white shadow-xl p-6 rounded-xl border">
             <h3 class="text-xl font-bold mb-4 text-blue-800">
-                <i class="fas fa-chart-bar mr-1"></i> Grafik Penjualan
+                <i class="fas fa-chart-bar mr-1"></i> Sales Chart
             </h3>
             <canvas id="barChart"></canvas>
         </div>
 
         <div class="bg-white shadow-xl p-6 rounded-xl border">
             <h3 class="text-xl font-bold mb-4 text-blue-800">
-                <i class="fas fa-chart-line mr-1"></i> Tren Pendapatan
+                <i class="fas fa-chart-line mr-1"></i> Tren Revenue
             </h3>
             <canvas id="lineChart"></canvas>
         </div>
@@ -219,7 +219,7 @@ $qPopular = $conn->query("
     <div class="flex flex-col items-center mt-20 scroll-animate">
         <h3 class="text-2xl font-bold text-blue-800 mb-8 flex items-center gap-3">
             <i class="fas fa-fire text-orange-500"></i>
-            Produk Terlaris Minggu Ini
+            Products Best Seller Minggu Ini
         </h3>
 
         <div class="flex flex-wrap justify-center gap-8">
@@ -232,7 +232,7 @@ $qPopular = $conn->query("
                         <img src="../uploads/<?= $p['gambar'] ?>"
                              class="w-full h-full object-cover transition duration-500 hover:scale-110">
                         <div class="absolute top-3 left-3 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                            <i class="fas fa-fire"></i> Terlaris
+                            <i class="fas fa-fire"></i> Best Seller
                         </div>
                     </div>
 
@@ -241,7 +241,7 @@ $qPopular = $conn->query("
                             <?= htmlspecialchars($p['nama_produk']) ?>
                         </h4>
                         <p class="text-gray-500 mt-1">
-                            Terjual: <?= $p['total_terjual'] ?>
+                            Sold: <?= $p['total_terjual'] ?>
                         </p>
                     </div>
 
@@ -250,7 +250,7 @@ $qPopular = $conn->query("
             <?php else: ?>
                 <div class="text-gray-500 text-center py-10">
                     <i class="fas fa-box-open text-4xl mb-3"></i>
-                    <p>Belum ada data produk terlaris</p>
+                    <p>No. best-selling product data yet</p>
                 </div>
             <?php endif; ?>
 
@@ -296,7 +296,7 @@ new Chart(document.getElementById('barChart'),{
 
 new Chart(document.getElementById('lineChart'),{
     type:'line',
-    data:{labels,datasets:[{label:'Pendapatan',data:values,borderColor:'rgba(37,99,235,1)',borderWidth:3,tension:.4}]}
+    data:{labels,datasets:[{label:'Revenue',data:values,borderColor:'rgba(37,99,235,1)',borderWidth:3,tension:.4}]}
 });
 </script>
 
