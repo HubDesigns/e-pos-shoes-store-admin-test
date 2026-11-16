@@ -5,7 +5,7 @@ require_once __DIR__ . '/../config/koneksi.php';
 if(($_SESSION['login'] != true)) {
     echo "
         <script>
-            alert('Silahkan login terlebih dahulu!');
+            alert('Please log in first.');
             window.location.href = '../login.php';
         </script>
     ";
@@ -13,14 +13,14 @@ if(($_SESSION['login'] != true)) {
 }
 
 // Ambil semua produk
-$qProduk = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
+$qProducts = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
 ?>
 
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Buat Transaksi</title>
+    <title>Buat Transactions</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../assets/fontawesome/css/all.min.css">
@@ -52,7 +52,7 @@ $qProduk = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
             transition: all 0.3s ease;
         }
 
-        /* Filter Stok Habis (Gelap) */
+        /* Filter Stock Habis (Gelap) */
         .img-oos {
             filter: grayscale(100%) brightness(60%);
         }
@@ -87,7 +87,7 @@ $qProduk = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
         <li class="relative">
             <button type="button" onclick="toggleDropdown(event)" class="flex items-center gap-2 hover:text-gray-200">
                 <i class="fas fa-receipt"></i>
-                <span>Transaksi</span>
+                <span>Transactions</span>
                 <i class="fas fa-chevron-down text-xs"></i>
             </button>
 
@@ -97,13 +97,13 @@ $qProduk = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
                 <a href="../views/laporan.php" 
                    class="block px-4 py-3 flex gap-2 hover:bg-gray-100">
                     <i class="fas fa-chart-line"></i> 
-                    <span>Laporan Penjualan</span>
+                    <span>Sales Reports</span>
                 </a>
 
                 <a href="../views/transaksi.php" 
                    class="block px-4 py-3 flex gap-2 hover:bg-gray-100">
                     <i class="fas fa-cash-register"></i> 
-                    <span>Buat Transaksi</span>
+                    <span>Buat Transactions</span>
                 </a>
 
             </div>
@@ -111,7 +111,7 @@ $qProduk = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
 
         <li>
             <a href="produk.php" class="flex items-center gap-2 hover:text-gray-200">
-                <i class="fas fa-box"></i> Produk
+                <i class="fas fa-box"></i> Products
             </a>
         </li>
 
@@ -128,23 +128,23 @@ $qProduk = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
 
     <h2 class="text-3xl font-bold mb-6 text-blue-800 flex items-center gap-3 scroll-animate">
         <i class="fas fa-cash-register"></i>
-        <span>Buat Transaksi</span>
+        <span>Buat Transactions</span>
     </h2>
 
     <div class="flex justify-end flex-wrap gap-4 mb-6 scroll-animate">
         <div class="relative">
             <i class="fa fa-search absolute left-3 top-3 text-gray-400"></i>
-            <input type="text" id="search" placeholder="Cari produk..."
+            <input type="text" id="search" placeholder="Search produk..."
                 class="pl-10 pr-4 py-2 w-64 rounded-lg outline-strong transition">
         </div>
 
-        <input type="number" id="minHarga" placeholder="Harga Min"
+        <input type="number" id="minPrice" placeholder="Price Min"
             class="px-4 py-2 w-40 rounded-lg outline-strong transition">
 
-        <input type="number" id="maxHarga" placeholder="Harga Max"
+        <input type="number" id="maxPrice" placeholder="Price Max"
             class="px-4 py-2 w-40 rounded-lg outline-strong transition">
 
-        <button onclick="filterProduk()"
+        <button onclick="filterProducts()"
             class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition shadow">
             <i class="fa fa-filter"></i> Filter
         </button>
@@ -154,7 +154,7 @@ $qProduk = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
 
         <?php 
         $i = 0; // Counter untuk delay animasi
-        while($p = $qProduk->fetch_assoc()): 
+        while($p = $qProducts->fetch_assoc()): 
             $stokHabis = ($p['stok'] <= 0);
             $delay = $i * 150; // Delay bertingkat: 0ms, 100ms, 200ms, dst
             $i++;
@@ -200,7 +200,7 @@ $qProduk = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
             </p>
             
             <p class="<?= $stokHabis ? 'text-red-600 font-bold' : 'text-gray-600' ?> text-sm">
-                Stok: <?= $p['stok'] ?>
+                Stock: <?= $p['stok'] ?>
             </p>
         </div>
         <?php endwhile; ?>
@@ -212,7 +212,7 @@ $qProduk = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
         
         <h3 class="text-xl font-bold mb-4 text-gray-800 flex items-center gap-2">
             <i class="fas fa-cart-plus text-blue-600"></i>
-            Tambah Pesanan
+            Add Pesanan
         </h3>
 
         <form action="../actions/transaksi.php" method="POST">
@@ -220,13 +220,13 @@ $qProduk = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
             <input type="hidden" id="popup_stok"> 
 
             <div class="mb-4">
-                <label class="block text-sm font-bold text-gray-700 mb-1">Nama Produk</label>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Nama Products</label>
                 <input type="text" id="popup_nama" readonly 
                        class="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-2 text-gray-600">
             </div>
 
             <div class="mb-4">
-                <label class="block text-sm font-bold text-gray-700 mb-1">Harga Satuan</label>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Price Satuan</label>
                 <input type="text" id="popup_harga" readonly 
                        class="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-2 text-gray-600">
             </div>
@@ -247,7 +247,7 @@ $qProduk = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
             <div class="flex justify-end gap-3">
                 <button type="button" onclick="closeForm()" 
                         class="px-5 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg text-gray-800 font-semibold transition">
-                    Batal
+                    Cancel
                 </button>
                 <button type="submit" 
                         class="px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-bold shadow-lg transition">
@@ -313,7 +313,7 @@ function hitungTotal() {
 
     // Validasi stok sederhana di client side
     if(qty > stok) {
-        alert('Stok tidak mencukupi!');
+        alert('Stock tidak mencukupi!');
         document.getElementById('popup_qty').value = stok;
         qty = stok;
     }
@@ -340,9 +340,9 @@ document.getElementById('search').addEventListener('input', function(){
     });
 });
 
-function filterProduk(){
-    const min = parseInt(document.getElementById('minHarga').value) || 0;
-    const max = parseInt(document.getElementById('maxHarga').value) || Infinity;
+function filterProducts(){
+    const min = parseInt(document.getElementById('minPrice').value) || 0;
+    const max = parseInt(document.getElementById('maxPrice').value) || Infinity;
 
     document.querySelectorAll('.produk-item').forEach(item => {
         const harga = parseInt(item.getAttribute('data-harga'));
