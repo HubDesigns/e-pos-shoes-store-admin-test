@@ -46,7 +46,7 @@ $queryDetail = $conn->query("
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Struk #<?= $id_transaksi ?></title>
+    <title>Receipt #<?= $id_transaksi ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
@@ -74,9 +74,9 @@ $queryDetail = $conn->query("
     <div class="max-w-[400px] mx-auto bg-white">
 
         <div class="text-center mb-4">
-            <h2 class="text-xl font-bold uppercase tracking-widest">EPOS SEPATU</h2>
-            <p class="text-xs mt-1">Jl. Sukakarya</p>
-            <p class="text-xs">Telp: 0895-6326-51921</p>
+            <h2 class="text-xl font-bold uppercase tracking-widest">E-POS SHOES</h2>
+            <p class="text-xs mt-1">Sukakarya Street</p>
+            <p class="text-xs">Phone: 0895-6326-51921</p>
         </div>
 
         <div class="garis-putus"></div>
