@@ -32,7 +32,7 @@ CREATE TABLE `akun` (
   `username` varchar(50) NOT NULL,
   `password` varchar(100) NOT NULL,
   `nama_lengkap` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `akun`
@@ -53,7 +53,7 @@ CREATE TABLE `detail_transaksi` (
   `id_produk` int DEFAULT NULL,
   `qty` int NOT NULL,
   `subtotal` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `detail_transaksi`
@@ -81,7 +81,7 @@ CREATE TABLE `produk` (
   `stok` int NOT NULL,
   `gambar` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `produk`
@@ -106,7 +106,7 @@ CREATE TABLE `transaksi` (
   `tanggal` date NOT NULL,
   `total_bayar` int NOT NULL,
   `kasir` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `transaksi`
