@@ -23,14 +23,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             echo
            " <script>
-            alert('Password Salah!');
+            alert('Incorrect password.');
             window.location.href = '../login.php';
             </script>"; 
         }
     } else {
         echo
            " <script>
-            alert('Akun Salah!');
+            alert('Invalid username or account.');
             window.location.href = '../login.php';
             </script>"; 
     }
