@@ -331,7 +331,7 @@ $qStockAll = $conn->query("SELECT id_produk,nama_produk,kategori,stok FROM produ
 
     <div class="mt-14 flex justify-between items-center scroll-animate">
         <h2 class="text-xl font-bold text-red-600">
-            <i class="fa fa-exclamation-triangle"></i> Stock Menipis
+            <i class="fa fa-exclamation-triangle"></i> Low Stock
         </h2>
         <div class="flex gap-2">
             <button onclick="printTabel('tblMenipis')" class="bg-black text-white px-4 py-2 rounded"><i class="fa fa-print"></i> Print</button>
@@ -345,7 +345,7 @@ $qStockAll = $conn->query("SELECT id_produk,nama_produk,kategori,stok FROM produ
                 <thead class="bg-red-600 text-white">
                     <tr>
                         <th class="p-3 w-16 text-center">ID</th>
-                        <th class="p-3 text-center">Nama Products</th>
+                        <th class="p-3 text-center">Product Name</th>
                         <th class="p-3 w-40 text-center">Category</th>
                         <th class="p-3 w-20 text-center">Stock</th>
                     </tr>
@@ -381,7 +381,7 @@ $qStockAll = $conn->query("SELECT id_produk,nama_produk,kategori,stok FROM produ
                 <thead class="bg-gray-700 text-white">
                     <tr>
                         <th class="p-3 w-16 text-center">ID</th>
-                        <th class="p-3 text-center">Nama Products</th>
+                        <th class="p-3 text-center">Product Name</th>
                         <th class="p-3 w-40 text-center">Category</th>
                         <th class="p-3 w-20 text-center">Stock</th>
                     </tr>
