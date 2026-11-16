@@ -5,7 +5,7 @@ require_once __DIR__ . '/../config/koneksi.php';
 if(($_SESSION['login'] != true)) {
     echo "
         <script>
-            alert('Silahkan login terlebih dahulu!');
+            alert('Please log in first.');
             window.location.href = '../login.php';
         </script>
     ";
@@ -13,14 +13,14 @@ if(($_SESSION['login'] != true)) {
 }
 
 // Ambil data produk
-$qProduk = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
+$qProducts = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
 ?>
 
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Produk | EPOS</title>
+    <title>Products | EPOS</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -73,20 +73,20 @@ $qProduk = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
         </li>
         <li class="relative">
             <button type="button" onclick="toggleDropdown(event)" class="flex items-center gap-2 hover:text-gray-200">
-                <i class="fas fa-receipt"></i> <span>Transaksi</span> <i class="fas fa-chevron-down text-xs"></i>
+                <i class="fas fa-receipt"></i> <span>Transactions</span> <i class="fas fa-chevron-down text-xs"></i>
             </button>
             <div id="dropdownMenu" class="hidden absolute left-0 top-full mt-2 bg-white text-black shadow-xl rounded-lg w-56 py-2 z-[9999]">
                 <a href="../views/laporan.php" class="block px-4 py-3 flex gap-2 hover:bg-gray-100">
-                    <i class="fas fa-chart-line"></i> <span>Laporan Penjualan</span>
+                    <i class="fas fa-chart-line"></i> <span>Sales Reports</span>
                 </a>
                 <a href="../views/transaksi.php" class="block px-4 py-3 flex gap-2 hover:bg-gray-100">
-                    <i class="fas fa-cash-register"></i> <span>Buat Transaksi</span>
+                    <i class="fas fa-cash-register"></i> <span>Buat Transactions</span>
                 </a>
             </div>
         </li>
         <li>
             <a href="produk.php" class="flex items-center gap-2 hover:text-gray-200">
-                <i class="fas fa-box"></i> Produk
+                <i class="fas fa-box"></i> Products
             </a>
         </li>
         <li>
@@ -101,51 +101,51 @@ $qProduk = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
 
     <h2 class="text-3xl font-bold mb-6 text-blue-800 flex items-center space-x-3 scroll-animate">
         <i class="fas fa-box"></i>
-        <span>Daftar Produk</span>
+        <span>Daftar Products</span>
     </h2>
 
     <div class="flex flex-wrap justify-between items-center gap-4 mb-6 scroll-animate">
         <div class="relative w-full md:w-1/3">
             <i class="fa fa-search absolute left-3 top-3 text-gray-400"></i>
             <input type="text" id="searchInput" onkeyup="searchTable()" 
-                placeholder="Cari nama produk atau kategori..."
+                placeholder="Search by product name or category..."
                 class="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg outline-strong transition shadow-sm">
         </div>
 
         <button onclick="openPopup()"
             class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-semibold shadow-md transition transform hover:scale-105">
-            <i class="fa fa-plus"></i> Tambah Produk
+            <i class="fa fa-plus"></i> Add Products
         </button>
     </div>
 
     <div class="overflow-x-auto shadow-xl rounded-xl border border-gray-200 bg-white scroll-animate">
         
-        <?php if($qProduk->num_rows > 0): ?>
+        <?php if($qProducts->num_rows > 0): ?>
         <table class="w-full text-left" id="produkTable">
             <thead class="bg-blue-700 text-white">
                 <tr>
-                    <th class="p-4">No</th>
-                    <th class="p-4">Gambar</th>
-                    <th class="p-4">Nama Produk</th>
-                    <th class="p-4">Kategori</th>
-                    <th class="p-4">Harga</th>
-                    <th class="p-4">Stok</th>
-                    <th class="p-4 text-center">Aksi</th>
+                    <th class="p-4">No.</th>
+                    <th class="p-4">Image</th>
+                    <th class="p-4">Nama Products</th>
+                    <th class="p-4">Category</th>
+                    <th class="p-4">Price</th>
+                    <th class="p-4">Stock</th>
+                    <th class="p-4 text-center">Actions</th>
                 </tr>
             </thead>
 
             <tbody>
-                <?php $no=1; while ($row = $qProduk->fetch_assoc()) { 
-                    // REVISI 2: Logika Warna Row berdasarkan Stok + Hover Effect
+                <?php $no=1; while ($row = $qProducts->fetch_assoc()) { 
+                    // REVISI 2: Logika Warna Row berdasarkan Stock + Hover Effect
                     $rowClass = ""; 
                     if($row['stok'] == 0) {
-                        // Stok Habis: Merah muda, hover merah sedikit lebih tua
+                        // Stock Habis: Merah muda, hover merah sedikit lebih tua
                         $rowClass = "bg-red-50 hover:bg-red-100"; 
                     } elseif($row['stok'] < 10) {
-                        // Stok Menipis: Kuning muda, hover kuning sedikit lebih tua
+                        // Stock Menipis: Kuning muda, hover kuning sedikit lebih tua
                         $rowClass = "bg-yellow-50 hover:bg-yellow-100";
                     } else {
-                        // Stok Aman: Putih, hover abu-abu
+                        // Stock Aman: Putih, hover abu-abu
                         $rowClass = "bg-white hover:bg-gray-100";
                     }
                 ?>
@@ -171,11 +171,11 @@ $qProduk = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
                     </td>
                     
                     <td class="p-4">
-                        <?= $row['stok'] ?> Unit
+                        <?= $row['stok'] ?> Units
                     </td>
                     
                     <td class="p-4 flex justify-center space-x-6 text-lg">
-                        <button onclick="editProduk(
+                        <button onclick="editProducts(
                             '<?= $row['id_produk'] ?>',
                             '<?= $row['nama_produk'] ?>',
                             '<?= $row['kategori'] ?>',
@@ -186,8 +186,8 @@ $qProduk = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
                         </button>
 
                         <a href="../actions/delete_product.php?id=<?= $row['id_produk'] ?>"
-                           onclick="return confirm('Yakin ingin menghapus produk ini?')"
-                           class="text-red-600 hover:text-red-800 transition" title="Hapus">
+                           onclick="return confirm('Are you sure you want to delete this product?')"
+                           class="text-red-600 hover:text-red-800 transition" title="Delete">
                             <i class="fa fa-trash"></i>
                         </a>
                     </td>
@@ -198,16 +198,16 @@ $qProduk = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
 
         <div id="noDataMessage" class="hidden p-8 text-center text-gray-500">
             <i class="far fa-sad-tear text-4xl mb-2"></i>
-            <p>Produk tidak ditemukan.</p>
+            <p>Products tidak ditemukan.</p>
         </div>
 
         <?php else: ?>
             <div class="p-10 text-center text-gray-400 flex flex-col items-center">
                 <i class="fas fa-box-open text-6xl mb-4 text-gray-300"></i>
-                <h3 class="text-xl font-bold text-gray-600">Belum ada produk</h3>
-                <p class="mb-4">Silahkan tambahkan produk pertama Anda.</p>
+                <h3 class="text-xl font-bold text-gray-600">No. products yet</h3>
+                <p class="mb-4">Please add your first product.</p>
                 <button onclick="openPopup()" class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition shadow">
-                    Tambah Sekarang
+                    Add No.w
                 </button>
             </div>
         <?php endif; ?>
@@ -219,41 +219,41 @@ $qProduk = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
 <div id="popup" class="fixed inset-0 hidden justify-center items-center overlay z-[100]">
     <div class="bg-white text-black p-8 w-96 rounded-2xl shadow-2xl fade-in transform scale-100 transition-all">
         <h3 id="popup-title" class="text-2xl font-bold mb-6 text-center text-blue-800 flex items-center justify-center gap-2">
-            <i class="fas fa-box-open"></i> <span>Tambah Produk</span>
+            <i class="fas fa-box-open"></i> <span>Add Products</span>
         </h3>
 
         <form id="form-produk" method="POST" enctype="multipart/form-data" class="space-y-4">
             <input type="hidden" id="id_produk" name="id_produk">
             <div>
-                <label class="block text-sm font-bold text-gray-700 mb-1">Nama Produk</label>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Nama Products</label>
                 <input class="w-full border border-gray-300 p-2 rounded-lg outline-strong" id="nama_produk" name="nama_produk" placeholder="Contoh: Kopi Susu" required>
             </div>
             <div>
-                <label class="block text-sm font-bold text-gray-700 mb-1">Kategori</label>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Category</label>
                 <input class="w-full border border-gray-300 p-2 rounded-lg outline-strong" id="kategori" name="kategori" placeholder="Contoh: Minuman" required>
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Harga (Rp)</label>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Price (Rp)</label>
                     <input type="number" class="w-full border border-gray-300 p-2 rounded-lg outline-strong" id="harga" name="harga" placeholder="0" required>
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Stok</label>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Stock</label>
                     <input type="number" class="w-full border border-gray-300 p-2 rounded-lg outline-strong" id="stok" name="stok" placeholder="0" required>
                 </div>
             </div>
             <div>
-                <label class="block text-sm font-bold text-gray-700 mb-1">Gambar Produk</label>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Image Products</label>
                 <input type="file" class="w-full border border-gray-300 p-2 rounded-lg bg-gray-50 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" id="gambar" name="gambar">
             </div>
             <div class="flex gap-3 mt-6">
                 <button type="button" onclick="closePopup()"
                     class="w-1/2 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded-lg font-bold transition">
-                    Batal
+                    Cancel
                 </button>
                 <button type="submit"
                     class="w-1/2 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-bold shadow-lg transition">
-                    Simpan
+                    Save
                 </button>
             </div>
         </form>
@@ -322,16 +322,16 @@ function searchTable() {
 // --- POPUP LOGIC ---
 function openPopup() {
     document.getElementById("popup").style.display = "flex";
-    document.getElementById("popup-title").innerHTML = "<i class='fas fa-plus-circle'></i> <span>Tambah Produk</span>";
+    document.getElementById("popup-title").innerHTML = "<i class='fas fa-plus-circle'></i> <span>Add Products</span>";
     document.getElementById("form-produk").action = "../actions/add_product.php";
     document.getElementById("form-produk").reset();
     document.getElementById("id_produk").value = "";
     document.getElementById("gambar").required = true;
 }
 
-function editProduk(id, nama, kategori, harga, stok) {
+function editProducts(id, nama, kategori, harga, stok) {
     document.getElementById("popup").style.display = "flex";
-    document.getElementById("popup-title").innerHTML = "<i class='fas fa-edit'></i> <span>Edit Produk</span>";
+    document.getElementById("popup-title").innerHTML = "<i class='fas fa-edit'></i> <span>Edit Products</span>";
     document.getElementById("form-produk").action = "../actions/update_product.php";
     document.getElementById("id_produk").value = id;
     document.getElementById("nama_produk").value = nama;
