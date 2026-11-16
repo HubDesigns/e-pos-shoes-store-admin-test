@@ -291,7 +291,7 @@ const values = <?= json_encode($values) ?>;
 
 new Chart(document.getElementById('barChart'),{
     type:'bar',
-    data:{labels,datasets:[{label:'Total Penjualan',data:values,backgroundColor:'rgba(29,78,216,0.8)'}]}
+    data:{labels,datasets:[{label:'Total Sales',data:values,backgroundColor:'rgba(29,78,216,0.8)'}]}
 });
 
 new Chart(document.getElementById('lineChart'),{
