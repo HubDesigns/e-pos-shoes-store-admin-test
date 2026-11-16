@@ -46,7 +46,7 @@ include 'config/koneksi.php';
     </div>
 
     <div class="w-full max-w-md bg-white/80 backdrop-blur-xl shadow-2xl rounded-2xl p-8 animate-fadeIn border border-gray-200">
-        <h1 class="text-3xl font-bold text-dark text-center mb-6">Login ke Epos</h1>
+        <h1 class="text-3xl font-bold text-dark text-center mb-6">Log in to E-POS</h1>
 
         <form action="actions/login.php" method="POST" class="space-y-4">
             <div>
