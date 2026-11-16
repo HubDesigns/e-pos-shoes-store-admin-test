@@ -126,7 +126,7 @@ $qProducts = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
                 <tr>
                     <th class="p-4">No.</th>
                     <th class="p-4">Image</th>
-                    <th class="p-4">Nama Products</th>
+                    <th class="p-4">Product Name</th>
                     <th class="p-4">Category</th>
                     <th class="p-4">Price</th>
                     <th class="p-4">Stock</th>
@@ -142,7 +142,7 @@ $qProducts = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
                         // Stock Habis: Merah muda, hover merah sedikit lebih tua
                         $rowClass = "bg-red-50 hover:bg-red-100"; 
                     } elseif($row['stok'] < 10) {
-                        // Stock Menipis: Kuning muda, hover kuning sedikit lebih tua
+                        // Low Stock: Kuning muda, hover kuning sedikit lebih tua
                         $rowClass = "bg-yellow-50 hover:bg-yellow-100";
                     } else {
                         // Stock Aman: Putih, hover abu-abu
@@ -225,12 +225,12 @@ $qProducts = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
         <form id="form-produk" method="POST" enctype="multipart/form-data" class="space-y-4">
             <input type="hidden" id="id_produk" name="id_produk">
             <div>
-                <label class="block text-sm font-bold text-gray-700 mb-1">Nama Products</label>
-                <input class="w-full border border-gray-300 p-2 rounded-lg outline-strong" id="nama_produk" name="nama_produk" placeholder="Contoh: Kopi Susu" required>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Product Name</label>
+                <input class="w-full border border-gray-300 p-2 rounded-lg outline-strong" id="nama_produk" name="nama_produk" placeholder="Example: Leather Sneakers" required>
             </div>
             <div>
                 <label class="block text-sm font-bold text-gray-700 mb-1">Category</label>
-                <input class="w-full border border-gray-300 p-2 rounded-lg outline-strong" id="kategori" name="kategori" placeholder="Contoh: Minuman" required>
+                <input class="w-full border border-gray-300 p-2 rounded-lg outline-strong" id="kategori" name="kategori" placeholder="Example: Footwear" required>
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <div>
