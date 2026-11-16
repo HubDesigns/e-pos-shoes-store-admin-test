@@ -134,7 +134,7 @@ $qProducts = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
     <div class="flex justify-end flex-wrap gap-4 mb-6 scroll-animate">
         <div class="relative">
             <i class="fa fa-search absolute left-3 top-3 text-gray-400"></i>
-            <input type="text" id="search" placeholder="Search produk..."
+            <input type="text" id="search" placeholder="Search products..."
                 class="pl-10 pr-4 py-2 w-64 rounded-lg outline-strong transition">
         </div>
 
@@ -220,22 +220,22 @@ $qProducts = $conn->query("SELECT * FROM produk ORDER BY id_produk DESC");
             <input type="hidden" id="popup_stok"> 
 
             <div class="mb-4">
-                <label class="block text-sm font-bold text-gray-700 mb-1">Nama Products</label>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Product Name</label>
                 <input type="text" id="popup_nama" readonly 
                        class="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-2 text-gray-600">
             </div>
 
             <div class="mb-4">
-                <label class="block text-sm font-bold text-gray-700 mb-1">Price Satuan</label>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Unit Price</label>
                 <input type="text" id="popup_harga" readonly 
                        class="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-2 text-gray-600">
             </div>
 
             <div class="mb-4">
-                <label class="block text-sm font-bold text-gray-700 mb-1">Jumlah Beli</label>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Purchase Quantity</label>
                 <input type="number" name="qty" id="popup_qty" required min="1" oninput="hitungTotal()" 
                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                       placeholder="Masukkan jumlah...">
+                       placeholder="Enter quantity...">
             </div>
 
             <div class="mb-6">
