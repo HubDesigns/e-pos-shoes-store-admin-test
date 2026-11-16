@@ -5,24 +5,24 @@ require_once __DIR__ . '/../config/koneksi.php';
 
 // Cek Login (Opsional, matikan jika ingin bisa diakses publik)
 if(($_SESSION['login'] ?? false) != true){
-    die("Akses ditolak. Silakan login terlebih dahulu.");
+    die("Akses ditolak. Please log in first.");
 }
 
-// Validasi ID Transaksi
+// Validasi ID Transactions
 if (!isset($_GET['id']) || empty($_GET['id'])) {
-    die("Error: ID Transaksi tidak ditemukan.");
+    die("Error: ID Transactions tidak ditemukan.");
 }
 
 $id_transaksi = $_GET['id'];
 
-// 1. AMBIL DATA HEADER TRANSAKSI (Total, Tanggal, Kasir)
+// 1. AMBIL DATA HEADER TRANSAKSI (Total, Date, Cashier)
 $queryHeader = $conn->query("
     SELECT * FROM transaksi 
     WHERE id_transaksi = '$id_transaksi'
 ");
 
 if ($queryHeader->num_rows == 0) {
-    die("Data transaksi dengan ID #$id_transaksi tidak ditemukan di database.");
+    die("Transaction data with ID #$id_transaksi was not found in the database.");
 }
 
 $header = $queryHeader->fetch_assoc();
@@ -42,7 +42,7 @@ $queryDetail = $conn->query("
 ?>
 
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,15 +81,15 @@ $queryDetail = $conn->query("
 
         <div class="garis-putus"></div>
         <div class="flex justify-between text-xs mb-1">
-            <span>No. Resi</span>
+            <span>Receipt No..</span>
             <span>#<?= $id_transaksi ?></span>
         </div>
         <div class="flex justify-between text-xs mb-1">
-            <span>Tanggal</span>
+            <span>Date</span>
             <span><?= date('d/m/Y H:i', strtotime($header['tanggal'])) ?></span>
         </div>
         <div class="flex justify-between text-xs mb-1">
-            <span>Kasir</span>
+            <span>Cashier</span>
             <span class="uppercase"><?= htmlspecialchars($header['kasir'] ?? 'Admin') ?></span>
         </div>
         <div class="garis-putus"></div>
@@ -99,7 +99,7 @@ $queryDetail = $conn->query("
                 <?php 
                 $cekTotal = 0;
                 while($item = $queryDetail->fetch_assoc()): 
-                    // Hitung harga satuan (Subtotal dibagi Qty)
+                    // Hitung harga satuan (Subtotal dibagi Quantity)
                     $hargaSatuan = $item['subtotal'] / $item['qty'];
                     $cekTotal += $item['subtotal'];
                 ?>
@@ -122,13 +122,13 @@ $queryDetail = $conn->query("
 
         <div class="garis-putus"></div>
         <div class="flex justify-between text-sm font-bold mt-2">
-            <span>TOTAL TAGIHAN</span>
+            <span>TOTAL DUE</span>
             <span>Rp <?= number_format($header['total_bayar'], 0, ',', '.') ?></span>
         </div>
 
         <div class="mt-8 text-center text-[10px] text-gray-500">
-            <p>*** TERIMA KASIH ***</p>
-            <p class="mt-1">Barang yang sudah dibeli tidak dapat ditukar atau dikembalikan.</p>
+            <p>*** THANK YOU ***</p>
+            <p class="mt-1">Purchased items cannot be exchanged or returned.</p>
         </div>
 
     </div>
